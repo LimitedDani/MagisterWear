@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Magister Wear</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_setup">SetupActivity</string>
+
+    <string name="text_login">Login</string>
+    <string name="text_about">Over</string>
+    <string name="text_no_results">Geen resultaten</string>
+    <string name="text_select_school">Selecteer school</string>
+    <string name="text_username">Gebruikersnaam</string>
+    <string name="text_password">Wachtwoord</string>
+    <string name="text_welcome">Welkom</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_calendar">Agenda</string>
+</resources>

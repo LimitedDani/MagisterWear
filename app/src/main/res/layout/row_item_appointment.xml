@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/row_item"
+        android:layout_width="60px"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/appointment_image"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/circle_blue" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/period"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/appointment_image"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/row_item">
+
+        <TextView
+            android:id="@+id/lesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/lessontime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lesson"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="12sp"
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lessonlocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lesson"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="12sp"
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:textStyle="bold|italic" />
+    </RelativeLayout>
+</RelativeLayout>
