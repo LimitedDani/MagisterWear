@@ -72,11 +72,11 @@ public class CalendarFragment extends Fragment{
                     dataModels.add(appointment);
                 }
             }
-            String day = "Maandag";
-            String month = "jan";
+            String day;
+            String month;
             switch (MainActivity.date.getDay()) {
                 case (0):
-                    day = "";
+                    day = "Zondag";
                     break;
                 case (1):
                     day = "Maandag";
@@ -95,6 +95,12 @@ public class CalendarFragment extends Fragment{
                     break;
                 case (6):
                     day = "Zaterdag";
+                    break;
+                case (7):
+                    day = "Zondag";
+                    break;
+                default:
+                    day = "Maandag";
                     break;
             }
             switch (MainActivity.date.getMonth()) {

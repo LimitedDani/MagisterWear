@@ -13,4 +13,6 @@
 
     <string name="nav_home">Home</string>
     <string name="nav_calendar">Agenda</string>
+    <string name="message">Watch face tapped</string>
+    <string name="my_digital_name">My Digital</string>
 </resources>

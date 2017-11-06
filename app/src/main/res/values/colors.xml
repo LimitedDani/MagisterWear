@@ -11,5 +11,7 @@
     <color name="setup_color_5">#4CAF50</color>
     <color name="loading_background">#005f7f</color>
     <color name="nav_on_loading">#005f7f</color>
+    <color name="background">#000000</color>
+    <color name="digital_text">#ffffff</color>
 
 </resources>
