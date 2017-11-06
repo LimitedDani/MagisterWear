@@ -15,12 +15,12 @@ import nl.daniquedejong.magisterwear.R;
 
 public class LaunchActivity extends WearableActivity {
     private Button login, about;
-
+    public static LaunchActivity la;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-
+        la = this;
         login = (Button) findViewById(R.id.button_login);
         about = (Button) findViewById(R.id.button_about);
 

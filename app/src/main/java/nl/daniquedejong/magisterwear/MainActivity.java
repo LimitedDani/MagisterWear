@@ -16,9 +16,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
+import io.fabric.sdk.android.Fabric;
 import net.ilexiconn.magister.Magister;
 import net.ilexiconn.magister.container.Appointment;
 import net.ilexiconn.magister.container.Profile;
@@ -81,10 +84,12 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
 
     public RelativeLayout load;
     public String currentPage = "Home";
+    public TextView login_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         if (!getSharedPreferences("data", MODE_PRIVATE).getBoolean("LoggedIn", false)) {
             Intent setupIntent = new Intent(MainActivity.this, LaunchActivity.class);
             finish();
@@ -98,6 +103,7 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
         fm = sa.getSupportFragmentManager();
         date = DateUtils.getToday();
         load = findViewById(R.id.loading);
+        login_status = findViewById(R.id.login_status);
 
         mWearableActionDrawer = (WearableActionDrawerView) findViewById(R.id.bottom_action_drawer);
         mWearableActionDrawer.getController().peekDrawer();
@@ -165,15 +171,33 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
         loading(false);
     }
     private void login() {
+        login_status.setText(getResources().getString(R.string.status_logging_in));
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     magister = Magister.login(mSchool, mUser.username, mUser.password);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.status_logged_in));
+                        }
+                    });
                 } catch (final IOException e) {
                     e.printStackTrace();
-
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.status_error_while_logging_in));
+                        }
+                    });
                 } catch (ParseException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.status_error_while_logging_in));
+                        }
+                    });
                     e.printStackTrace();
                 }
                 if (magister != null) {
@@ -182,10 +206,15 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
                     Log.d("mProfile", mProfile.toString());
                     if (mProfile.nickname != null && mProfile.nickname != "null") {
                         mUser = new User(mUser.username, mUser.password, true);
-
                         getAppointments();
                     } else {
                         Log.d("Error", "Uknown error");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                login_status.setText(getResources().getString(R.string.msg_error));
+                            }
+                        });
                     }
                 }
             }
@@ -195,9 +224,16 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
 
     public void getAppointments() {
         if (magister != null && !magister.isExpired()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    login_status.setText(getResources().getString(R.string.status_getting_data));
+                }
+            });
             Date from = DateUtils.addDays(date, -7);
             Date until = DateUtils.addDays(date, 14);
             new MainActivity.AppointmentsTask(this, magister, from, until, 3).execute();
+
         } else {
             Log.d("Error", "getAppointments");
         }
@@ -255,10 +291,17 @@ public class MainActivity extends FragmentActivity implements HomeFragment.OnHom
 
         @Override
         protected void onPreExecute() {
+
         }
 
         @Override
         protected Appointment[] doInBackground(Void... params) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    login_status.setText(getResources().getString(R.string.status_almost_done));
+                }
+            });
             try {
                 AppointmentHandler appointmentHandler = new AppointmentHandler(magister);
                 Appointment[] appointments = appointmentHandler.getAppointments(date1, date2);

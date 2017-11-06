@@ -21,7 +21,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60px"
-                android:background="@color/colorPrimaryDark">
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/relativeLayout">
 
                 <TextView
                     android:id="@+id/text_welcome"
@@ -36,9 +37,19 @@
                 android:id="@+id/current_lesson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:text="current_lesson" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout"
+                android:layout_centerHorizontal="true"
+                android:text="@string/text_current_lesson"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </FrameLayout>

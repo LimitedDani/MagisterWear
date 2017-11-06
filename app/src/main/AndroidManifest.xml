@@ -27,46 +27,23 @@
         </activity>
         <activity
             android:name=".activity.SetupActivity"
-            android:label="@string/title_activity_setup"></activity>
+            android:label="@string/app_name"/>
         <activity
             android:name=".activity.LaunchActivity"
-            android:label="@string/title_activity_setup"></activity>
+            android:label="@string/app_name"/>
 
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
-
-        <service
-            android:name=".watchface.MagisterWatchFace"
-            android:label="@string/my_digital_name"
-            android:permission="android.permission.BIND_WALLPAPER">
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/watch_face" />
-            <meta-data
-                android:name="com.google.android.wearable.watchface.preview"
-                android:resource="@drawable/preview_digital" />
-            <meta-data
-                android:name="com.google.android.wearable.watchface.preview_circular"
-                android:resource="@drawable/preview_digital_circular" />
-
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-
-                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-            </intent-filter>
-        </service>
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e7fe37dee744e27a900aade10fb664948f331a51" />
     </application>
 
 </manifest>

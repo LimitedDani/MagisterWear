@@ -10,9 +10,17 @@
     <string name="text_username">Gebruikersnaam</string>
     <string name="text_password">Wachtwoord</string>
     <string name="text_welcome">Welkom</string>
+    <string name="text_current_lesson">Huidige les</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_calendar">Agenda</string>
-    <string name="message">Watch face tapped</string>
-    <string name="my_digital_name">My Digital</string>
+
+    <string name="status_logging_in">Inloggen&#8230;</string>
+    <string name="status_error_while_logging_in">Fout tijdens inloggen&#8230;</string>
+    <string name="status_logged_in">Ingelogd&#8230;</string>
+    <string name="status_getting_data">Data ophalen&#8230;</string>
+    <string name="status_almost_done">Bijna klaar&#8230;</string>
+
+
+    <string name="msg_error">Fout is opgetreden</string>
 </resources>

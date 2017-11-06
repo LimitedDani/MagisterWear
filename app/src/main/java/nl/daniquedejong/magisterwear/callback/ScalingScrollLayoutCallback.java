@@ -11,7 +11,7 @@ import android.view.View;
 public class ScalingScrollLayoutCallback extends WearableLinearLayoutManager.LayoutCallback {
 
     // Max we scale the child View.
-    private static final float MAX_CHILD_SCALE = 0.40f;
+    private static final float MAX_CHILD_SCALE = 0.62f;
 
     private float mProgressToCenter;
 

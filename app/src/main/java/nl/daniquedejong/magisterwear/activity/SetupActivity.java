@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -47,6 +49,8 @@ public class SetupActivity extends FragmentActivity implements SearchSchoolFragm
     private SetupActivity sa;
     private Context mcontext;
     private School school;
+    public RelativeLayout load;
+    public TextView login_status;
     Profile mProfile = new Profile();
     User mUser;
     @Override
@@ -56,6 +60,11 @@ public class SetupActivity extends FragmentActivity implements SearchSchoolFragm
         mcontext = this;
         sa = (SetupActivity) mcontext;
         fm = sa.getSupportFragmentManager();
+
+        load = findViewById(R.id.loading);
+        login_status = findViewById(R.id.login_status);
+        loading(false);
+
         loadSearchSchoolFragment();
     }
     public void onSearchButtonClick(String schoolname) {
@@ -70,21 +79,78 @@ public class SetupActivity extends FragmentActivity implements SearchSchoolFragm
         new Thread(new Runnable() {
             @Override
             public void run() {
+                loading(true);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        login_status.setText(getResources().getString(R.string.status_logging_in));
+                    }
+                });
                 Magister magister = null;
                 try {
                     magister = Magister.login(school, username, password);
                 } catch (final IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.msg_error));
+                            loading(false);
+                            CharSequence text = "Combinatie niet correct";
+                            int duration = Toast.LENGTH_LONG;
 
+                            Toast toast = Toast.makeText(mcontext, text, duration);
+                            toast.show();
+                        }
+                    });
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.msg_error));
+                            loading(false);
+                            CharSequence text = "Combinatie niet correct";
+                            int duration = Toast.LENGTH_LONG;
+
+                            Toast toast = Toast.makeText(mcontext, text, duration);
+                            toast.show();
+                        }
+                    });
                 } catch (final InvalidParameterException e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.msg_error));
+                            loading(false);
+                            CharSequence text = "Combinatie niet correct";
+                            int duration = Toast.LENGTH_LONG;
+
+                            Toast toast = Toast.makeText(mcontext, text, duration);
+                            toast.show();
+                        }
+                    });
                 }
                 if (magister != null) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login_status.setText(getResources().getString(R.string.status_logged_in));
+                        }
+                    });
+
                     mProfile = magister.profile;
                     Log.d("Study", magister.currentStudy.toString());
                     Log.d("mProfile", mProfile.toString());
                     if (mProfile.nickname != null && mProfile.nickname != "null") {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                login_status.setText(getResources().getString(R.string.status_getting_data));
+                            }
+                        });
+
                         mUser = new User(username, password, true);
                         String Account = new Gson().toJson(mProfile, Profile.class);
                         String School = new Gson().toJson(school, School.class);
@@ -106,11 +172,19 @@ public class SetupActivity extends FragmentActivity implements SearchSchoolFragm
                         editor.putInt("DataVersion", 3);
                         editor.apply();
 
+                        LaunchActivity.la.finish();
                         Intent i = new Intent(mcontext, MainActivity.class);
                         startActivity(i);
                         finish();
                     } else {
                         Log.d("Error", "Uknown error");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                login_status.setText(getResources().getString(R.string.msg_error));
+                                loading(false);
+                            }
+                        });
                     }
                 }
             }
@@ -143,5 +217,13 @@ public class SetupActivity extends FragmentActivity implements SearchSchoolFragm
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_content, fragment, "LoginSchool");
         ft.commit();
+    }
+    public void loading(final boolean value) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                load.setVisibility(value ? View.VISIBLE : View.INVISIBLE);
+            }
+        });
     }
 }
